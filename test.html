@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Тестовое задание</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<p id="check"></p>
+		<script type="text/javascript">
+			let numberElements = +prompt('Введите количество элементов: ');
+			let arrayNumber = [];
+			let maxElementIndex;
+
+			arrayFilling();
+			maxElementIndex = searchMaxValueArray(arrayNumber);
+	
+			document.body.innerHTML = '<p> Массив: ' + arrayNumber.join(", ") + '<br>Индекс максимального элемента: ' + maxElementIndex + '</p>';
+
+			checkAlgorithm(arrayNumber, maxElementIndex);
+
+
+			function checkAlgorithm(arrayNumber, maxElementIndex) {
+				let maxElement = arrayNumber[maxElementIndex];
+
+				arrayNumber.sort((a,b) => {
+					return b - a;
+				});
+
+				if(maxElement === arrayNumber[0]) {
+					document.write('Проверка прошла успешно!');
+				}
+			}
+
+			
+			function randomInteger(min, max) {
+				let rand = min - 0.5 + Math.random() * (max - min + 1);
+
+			  	return Math.round(rand);
+			}
+
+			function arrayFilling() {
+				for(let i = 0; i < numberElements; i++) {
+					arrayNumber.push(randomInteger(-100, 100));
+				}
+			}
+
+			function searchMaxValueArray(arrayNumber) {
+				let numberElements = arrayNumber.length;
+				let maxElementIndex, index;
+
+				if(numberElements % 2 == 0) {
+					if(arrayNumber[0] > arrayNumber[1]) {
+						maxElementIndex = 0;
+					} else {
+						if(arrayNumber[0] < arrayNumber[1]) {
+							maxElementIndex = 1;
+						}
+					}
+
+					index = 2
+				} else {
+					maxElementIndex = 0;
+					index = 1;
+				}
+
+				while(index < numberElements - 1) {
+					if(arrayNumber[index] >  arrayNumber[index + 1]) {
+						if(arrayNumber[index] > arrayNumber[maxElementIndex]) {
+							maxElementIndex = index;
+						}
+					} else {
+						if(arrayNumber[index + 1] > arrayNumber[maxElementIndex]) {
+							maxElementIndex = index + 1;
+						}
+					}
+
+					index += 2;
+				}
+
+				return maxElementIndex;
+			}
+
+		</script>
+	</body>
+</html>
